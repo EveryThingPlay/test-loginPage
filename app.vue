@@ -1,8 +1,7 @@
 <template>
   <div>
-    <NuxtWelcome />
+    <NuxtPage class="min-h-[100vh]" />
   </div>
 </template>
 <script lang="ts">
-console.log('hello');
 </script>

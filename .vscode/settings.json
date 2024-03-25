@@ -2,5 +2,6 @@
   "files.autoSave": "onFocusChange",
   "editor.detectIndentation": false,
 	"editor.insertSpaces": false,
-	"editor.tabSize": 2
+	"editor.tabSize": 2,
+  "css.customData": [".vscode/tailwind.json"]
 }

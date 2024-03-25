@@ -31,6 +31,9 @@ devDependencies:
   '@vue/eslint-config-typescript':
     specifier: ^13.0.0
     version: 13.0.0(eslint-plugin-vue@9.23.0)(eslint@8.57.0)(typescript@5.4.3)
+  autoprefixer:
+    specifier: ^10.4.19
+    version: 10.4.19(postcss@8.4.38)
   eslint:
     specifier: ^8.54.0
     version: 8.57.0
@@ -43,6 +46,12 @@ devDependencies:
   eslint-plugin-vue:
     specifier: ^9.18.1
     version: 9.23.0(eslint@8.57.0)
+  postcss:
+    specifier: ^8.4.38
+    version: 8.4.38
+  tailwindcss:
+    specifier: ^3.4.1
+    version: 3.4.1
 
 packages:
 
