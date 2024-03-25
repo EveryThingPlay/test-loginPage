@@ -1,8 +1,11 @@
-<script setup>
+<script setup lang="ts">
 definePageMeta({
 	middleware: 'only-anonymus',
 	layout: 'auth',
 });
+
+const otpModel = ref('');
+const isButtonEnabled = computed(() => otpModel.value.length === 6);
 </script>
 
 <template>
@@ -29,10 +32,14 @@ definePageMeta({
       </div>
       <div class="flex flex-col gap-6 justify-center items-center">
         <UI-OTP
+          v-model="otpModel"
           digit-count="6"
           class="grow-0 shrink-0"
         />
-        <UI-Button class="w-[453px]">
+        <UI-Button
+          class="w-[453px]"
+          :disabled="!isButtonEnabled"
+        >
           SUBMIT
         </UI-Button>
       </div>

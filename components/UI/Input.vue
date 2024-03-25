@@ -5,6 +5,7 @@ defineProps({
 	name: {type: String, default: 'input'},
 	type: {type: String as PropType<'text'|'password'|'email'>, default: 'text'},
 	placeholder: {type: String, default: undefined},
+	disabled: {type: Boolean, default: false},
 });
 
 const emits = defineEmits(['update:modelValue']);

@@ -1,9 +1,6 @@
 <script setup lang="ts">
 
-const formModel = ref({
-	email: '',
-	password: '',
-});
+const {loginForm} = storeToRefs(useAuthStore());
 
 definePageMeta({
 	middleware: 'only-anonymus',
@@ -33,10 +30,10 @@ definePageMeta({
             >
           </div>
         </div>
-        <div class="flex flex-col justify-center items-center gap-[25px] w-[453px]">
+        <form class="flex flex-col justify-center items-center gap-[25px] w-[453px]">
           <div class="flex flex-col gap-2.5 w-full justify-center items-center">
             <UIInput
-              v-model="formModel.email"
+              v-model="loginForm.email"
               icon="envelope"
               name="email"
               type="email"
@@ -44,7 +41,7 @@ definePageMeta({
               class="w-full"
             />
             <UIInput
-              v-model="formModel.password"
+              v-model="loginForm.password"
               icon="shield-slash"
               type="password"
               placeholder="Password"
@@ -52,7 +49,10 @@ definePageMeta({
             />
           </div>
           <div class="flex flex-col w-full gap-5 items-center text-base/6">
-            <UIButton class="w-full">
+            <UIButton
+							:disabled="!(loginForm.email && loginForm.password)"
+              class="w-full"
+            >
               LOG IN
             </UIButton>
             <p class="text-zinc-500">
@@ -65,7 +65,7 @@ definePageMeta({
               </NuxtLink>
             </p>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </NuxtLayout>

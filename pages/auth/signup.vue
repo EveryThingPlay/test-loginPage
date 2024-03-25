@@ -1,17 +1,13 @@
-<script setup>
+<script setup lang="ts">
 
 definePageMeta({
 	middleware: 'only-anonymus',
 	layout: 'auth',
 });
 
-const formModel = ref({
-	username: '',
-	email: '',
-	password: '',
-	repeatPassword: '',
-	terms: false,
-});
+const {signupForm} = storeToRefs(useAuthStore());
+
+const isButtonActive = computed(() => signupForm.value.terms && signupForm.value.username && signupForm.value.email && (signupForm.value.password === signupForm.value.repeatPassword));
 </script>
 
 <template>
@@ -29,7 +25,7 @@ const formModel = ref({
         <div class="flex flex-col justify-center items-center w-full gap-2.5">
           <div class="flex flex-col gap-2.5 w-full justify-center items-center">
             <UIInput
-              v-model="formModel.username"
+              v-model="signupForm.username"
               icon="person"
               name="username"
               type="text"
@@ -37,7 +33,7 @@ const formModel = ref({
               class="w-full"
             />
             <UIInput
-              v-model="formModel.email"
+              v-model="signupForm.email"
               icon="envelope"
               name="email"
               type="email"
@@ -45,14 +41,14 @@ const formModel = ref({
               class="w-full"
             />
             <UIInput
-              v-model="formModel.password"
+              v-model="signupForm.password"
               icon="shield-slash"
               type="password"
               placeholder="Password"
               class="w-full"
             />
             <UIInput
-              v-model="formModel.repeatPassword"
+              v-model="signupForm.repeatPassword"
               icon="shield-slash"
               type="password"
               placeholder="Confirm Password"
@@ -62,7 +58,7 @@ const formModel = ref({
           <div class="flex flex-row self-start gap-2.5 items-center h-7 ">
             <UICheckbox
               id="agree-terms"
-              v-model="formModel.terms"
+              v-model="signupForm.terms"
             />
             <label
               for="agree-terms"
@@ -76,7 +72,10 @@ const formModel = ref({
           </div>
         </div>
         <div class="flex flex-col w-full gap-5 items-center text-base/6">
-          <UIButton class="w-full">
+          <UIButton
+            class="w-full"
+            :disabled="!isButtonActive"
+          >
             SIGN UP
           </UIButton>
           <p class="text-zinc-500">
