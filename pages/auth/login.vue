@@ -1,11 +1,15 @@
 <script setup lang="ts">
 
-const {loginForm} = storeToRefs(useAuthStore());
+const {loginForm} = storeToRefs(useFormsStore());
+const {auth} = useUserStore();
 
 definePageMeta({
 	middleware: 'only-anonymus',
 	layout: 'auth',
 });
+
+const isButtonActive = computed(() => loginForm.value.fields.username.value && loginForm.value.fields.password.value);
+
 </script>
 
 <template>
@@ -30,28 +34,23 @@ definePageMeta({
             >
           </div>
         </div>
-        <form class="flex flex-col justify-center items-center gap-[25px] w-[453px]">
+        <div class="flex flex-col justify-center items-center gap-[25px] w-[453px]">
           <div class="flex flex-col gap-2.5 w-full justify-center items-center">
             <UIInput
-              v-model="loginForm.email"
-              icon="envelope"
-              name="email"
-              type="email"
-              placeholder="Email"
-              class="w-full"
-            />
-            <UIInput
-              v-model="loginForm.password"
-              icon="shield-slash"
-              type="password"
-              placeholder="Password"
+              v-for="field in loginForm.fields"
+              :key="field.name"
+              v-model="field.value"
+              :icon="field.icon"
+              :type="field.type"
+              :placeholder="field.name"
               class="w-full"
             />
           </div>
           <div class="flex flex-col w-full gap-5 items-center text-base/6">
             <UIButton
-							:disabled="!(loginForm.email && loginForm.password)"
+              :disabled="!isButtonActive"
               class="w-full"
+              @click="auth"
             >
               LOG IN
             </UIButton>
@@ -65,7 +64,7 @@ definePageMeta({
               </NuxtLink>
             </p>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </NuxtLayout>

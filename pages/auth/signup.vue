@@ -5,9 +5,12 @@ definePageMeta({
 	layout: 'auth',
 });
 
-const {signupForm} = storeToRefs(useAuthStore());
+const {signupForm} = storeToRefs(useFormsStore());
 
-const isButtonActive = computed(() => signupForm.value.terms && signupForm.value.username && signupForm.value.email && (signupForm.value.password === signupForm.value.repeatPassword));
+const isButtonActive = computed(() => {
+	const {fields, terms} = signupForm.value;
+	return terms && fields.username.value && /^[\w]+@([\w-]+\.)+[\w-]{2,4}$/.test(fields.email.value) && fields.password.value && fields.password.value === fields.repeatPassword.value;
+});
 </script>
 
 <template>
@@ -25,33 +28,12 @@ const isButtonActive = computed(() => signupForm.value.terms && signupForm.value
         <div class="flex flex-col justify-center items-center w-full gap-2.5">
           <div class="flex flex-col gap-2.5 w-full justify-center items-center">
             <UIInput
-              v-model="signupForm.username"
-              icon="person"
-              name="username"
-              type="text"
-              placeholder="Username"
-              class="w-full"
-            />
-            <UIInput
-              v-model="signupForm.email"
-              icon="envelope"
-              name="email"
-              type="email"
-              placeholder="Email"
-              class="w-full"
-            />
-            <UIInput
-              v-model="signupForm.password"
-              icon="shield-slash"
-              type="password"
-              placeholder="Password"
-              class="w-full"
-            />
-            <UIInput
-              v-model="signupForm.repeatPassword"
-              icon="shield-slash"
-              type="password"
-              placeholder="Confirm Password"
+              v-for="field of signupForm.fields"
+              :key="field"
+              v-model="field.value"
+              :icon="field.icon"
+              :type="field.type"
+              :placeholder="field.name"
               class="w-full"
             />
           </div>
