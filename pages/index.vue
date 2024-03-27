@@ -5,7 +5,7 @@ definePageMeta({
 });
 
 function handleLogout() {
-	useUserStore().$reset();
+	useUserStore().logout();
 	navigateTo('/auth/login');
 }
 </script>

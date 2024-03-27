@@ -1,14 +1,15 @@
 <template>
   <div class="w-full h-full bg-primary flex flex-col justify-center items-center text-white">
-    <img
-      src="/images/auth/background.svg"
-      class="absolute"
-    >
-    <img
-      :src="`/images/auth/${(useRoute().name as string).split('auth-')[1]}.svg`"
-      class="absolute"
-    >
-    <div class="flex flex-col justify-center items-center mt-[756px]">
+    <div>
+      <img
+        src="/images/auth/background.svg"
+      >
+      <img
+        :src="`/images/auth/${(useRoute().name as string).split('auth-')[1]}.svg`"
+        class="my-[-600px]"
+      >
+    </div>
+    <div class="flex flex-col justify-center items-center">
       <p class="font-semibold text-xl/6 text-light h-[25px]">
         {{ /* @ts-ignore */
           messages.primary[useRoute().name] ?? ''

@@ -4,7 +4,9 @@ export const useUserStore = defineStore('user', {
 	state: () => ({
 		user: undefined as User | undefined,
 	}),
-	persist: true,
+	persist: {
+		storage: persistedState.localStorage,
+	},
 	actions: {
 		async auth() {
 			await $fetch<User>('https://dummyjson.com/auth/login', {
@@ -15,8 +17,11 @@ export const useUserStore = defineStore('user', {
 				},
 			}).then(response => {
 				this.user = response;
-				localStorage.setItem('user', JSON.stringify(response));
 			});
+		},
+		logout() {
+			this.user = undefined;
+			localStorage.removeItem('user');
 		},
 	},
 });
