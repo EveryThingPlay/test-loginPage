@@ -11,6 +11,23 @@ const isButtonActive = computed(() => {
 	const {fields, terms} = signupForm.value;
 	return terms && fields.username.value && /^[\w]+@([\w-]+\.)+[\w-]{2,4}$/.test(fields.email.value) && fields.password.value && fields.password.value === fields.repeatPassword.value;
 });
+
+onBeforeRouteLeave((to, _from, next) => {
+	if (to.name === 'auth-otp') {
+		return next();
+	}
+
+	// eslint-disable-next-line no-alert
+	const answer = window.confirm(
+		'Do you really want to leave? You have unsaved changes!',
+	);
+	if (!answer) {
+		return false;
+	}
+
+	useFormsStore().$reset();
+	next();
+});
 </script>
 
 <template>
@@ -57,6 +74,7 @@ const isButtonActive = computed(() => {
           <UIButton
             class="w-full"
             :disabled="!isButtonActive"
+            @click="navigateTo('/auth/otp')"
           >
             SIGN UP
           </UIButton>

@@ -1,7 +1,5 @@
-import {isAuthenticated} from '~/utils/auth';
-
 export default defineNuxtRouteMiddleware(async () => {
-	if (!isAuthenticated()) {
+	if (!useUserStore().user) {
 		return navigateTo('/auth/login');
 	}
 });

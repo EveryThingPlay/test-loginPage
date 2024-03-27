@@ -10,6 +10,18 @@ definePageMeta({
 
 const isButtonActive = computed(() => loginForm.value.fields.username.value && loginForm.value.fields.password.value);
 
+const error = ref(false);
+
+async function handleAuth() {
+	error.value = false;
+	await auth().then(async () => {
+		useFormsStore().$reset();
+		navigateTo('/');
+	}).catch(err => {
+		error.value = true;
+		console.error(err);
+	});
+}
 </script>
 
 <template>
@@ -50,10 +62,16 @@ const isButtonActive = computed(() => loginForm.value.fields.username.value && l
             <UIButton
               :disabled="!isButtonActive"
               class="w-full"
-              @click="auth"
+              @click="handleAuth"
             >
               LOG IN
             </UIButton>
+            <p
+              v-if="error"
+              class="text-red-400"
+            >
+              Username or password is incorrect
+            </p>
             <p class="text-zinc-500">
               Don't have account?
               <NuxtLink

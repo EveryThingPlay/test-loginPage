@@ -5,6 +5,7 @@ definePageMeta({
 });
 
 const otpModel = ref('');
+const email = useFormsStore().signupForm.fields.email.value;
 const isButtonEnabled = computed(() => otpModel.value.length === 6);
 </script>
 
@@ -25,7 +26,7 @@ const isButtonEnabled = computed(() => otpModel.value.length === 6);
           <span class="text-xl/6 text-separator w-full h-30px">
             Sent OTP on
             <span class="text-secondary font-semibold">
-              johndoe@gmail.com
+              {{ email }}
             </span>
           </span>
         </div>
